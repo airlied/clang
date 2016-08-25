@@ -2661,6 +2661,14 @@ static void ParseLangArgs(LangOptions &Opts, ArgList &Args, InputKind IK,
   Opts.OpenMPCUDAMode = Opts.OpenMPIsDevice && T.isNVPTX() &&
                         Args.hasArg(options::OPT_fopenmp_cuda_mode);
 
+  // Parse SYCL arguments
+  if (Args.hasArg(OPT_sycl))
+    Opts.SYCL = 1;
+  if (Args.hasArg(OPT_sycl_is_device))
+    Opts.SYCLIsDevice = 1;
+  if (Args.hasArg(OPT_sycl_print_kernel_ast))
+    Opts.SYCLPrintKernelAST = 1;
+
   // Record whether the __DEPRECATED define was requested.
   Opts.Deprecated = Args.hasFlag(OPT_fdeprecated_macro,
                                  OPT_fno_deprecated_macro,
