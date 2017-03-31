@@ -435,6 +435,9 @@ public:
   /// Auxiliary triple for CUDA compilation.
   std::string AuxTriple;
 
+  /// Device triple for SYCL compilation.
+  std::string SYCLDeviceTriple;
+
   /// Filename to write statistics to.
   std::string StatsFile;
 
