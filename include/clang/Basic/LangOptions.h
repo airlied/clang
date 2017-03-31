@@ -202,6 +202,9 @@ public:
   /// host code generation.
   std::string OMPHostIRFile;
 
+  /// The SYCL device target passed as an option
+  std::string SYCLDeviceTriple;
+
   /// Indicates whether the front-end is explicitly told that the
   /// input is a header file (i.e. -x c-header).
   bool IsHeaderFile = false;
