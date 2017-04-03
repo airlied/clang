@@ -3034,6 +3034,12 @@ bool CompilerInvocation::CreateFromArgs(CompilerInvocation &Res,
   if (LangOpts.OpenMPIsDevice)
     Res.getTargetOpts().HostTriple = Res.getFrontendOpts().AuxTriple;
 
+  if (!LangOpts.SYCLDeviceTriple.empty()) {
+    Res.getTargetOpts().HostTriple = Res.getFrontendOpts().AuxTriple;
+    //    Res.getTargetOpts().Triple = LangOptions::SYCLDeviceTriple;
+  }
+
+
   // FIXME: Override value name discarding when asan or msan is used because the
   // backend passes depend on the name of the alloca in order to print out
   // names.
