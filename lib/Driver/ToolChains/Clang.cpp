@@ -2388,6 +2388,18 @@ static void RenderOpenCLOptions(const ArgList &Args, ArgStringList &CmdArgs) {
       CmdArgs.push_back(Args.MakeArgString(A->getOption().getPrefixedName()));
 }
 
+static void RenderSYCLOptions(const ArgList &Args, ArgStringList &CmdArgs) {
+  const unsigned ForwardedArguments[] = {
+      options::OPT_sycl,
+      options::OPT_sycl_is_device,
+      options::OPT_sycl_print_kernel_ast,
+  };
+
+  for (const auto &Arg : ForwardedArguments)
+    if (const auto *A = Args.getLastArg(Arg))
+      CmdArgs.push_back(Args.MakeArgString(A->getOption().getPrefixedName()));
+}
+
 static void RenderARCMigrateToolOptions(const Driver &D, const ArgList &Args,
                                         ArgStringList &CmdArgs) {
   bool ARCMTEnabled = false;
@@ -4113,6 +4125,9 @@ void Clang::ConstructJob(Compilation &C, const JobAction &JA,
 
   // Forward -cl options to -cc1
   RenderOpenCLOptions(Args, CmdArgs);
+
+  // Forward -sycl options to -cc1
+  RenderSYCLOptions(Args, CmdArgs);
 
   if (Arg *A = Args.getLastArg(options::OPT_fcf_protection_EQ)) {
     CmdArgs.push_back(
