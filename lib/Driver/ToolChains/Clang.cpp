@@ -2395,6 +2395,10 @@ static void RenderSYCLOptions(const ArgList &Args, ArgStringList &CmdArgs) {
       options::OPT_sycl_print_kernel_ast,
   };
 
+  if (Arg *A = Args.getLastArg(options::OPT_sycl_device_arch_EQ)) {
+    std::string SYCLDevArchStr = std::string("-sycl-device-arch=") + A->getValue();
+    CmdArgs.push_back(Args.MakeArgString(SYCLDevArchStr));
+  }
   for (const auto &Arg : ForwardedArguments)
     if (const auto *A = Args.getLastArg(Arg))
       CmdArgs.push_back(Args.MakeArgString(A->getOption().getPrefixedName()));
